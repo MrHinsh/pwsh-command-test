@@ -1,0 +1,56 @@
+name: Test Setup
+
+on:
+  push:
+    branches: ["*"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+
+   # Setup & Configuration
+  SetupWin:
+    name: "Setup & Configuration "
+    runs-on: windows-latest
+    outputs:
+      TestSetupWin: ${{ steps.nkdagility.outputs.TestSetupWin }}      
+    steps:
+    - name: "Build NKDAgility Outputs"
+      shell: pwsh
+      id: nkdagility
+      run: |
+            echo "TestSetupWin=sucess" >> $env:GITHUB_OUTPUT
+
+   # Setup & Configuration
+   SetupUbntu:
+    name: "Setup & Configuration "
+    runs-on: ubuntu-latest
+    outputs:
+      TestSetupUn: ${{ steps.nkdagility.outputs.TestSetupUn }}      
+    steps:
+    - name: "Build NKDAgility Outputs"
+      shell: pwsh
+      id: nkdagility
+      run: |
+            echo "TestSetupUn=sucess" >> $env:GITHUB_OUTPUT
+
+
+  # Setup Validator
+  SetupSummeryStage:
+    name: "Output Data"
+    runs-on: ubuntu-latest
+    needs: SetupWin, SetupUbntu
+    steps:
+    - name: "Show Summery"
+      if: always()
+      shell: pwsh
+      id: nkdagility-summery
+      run: |
+            $markdown = @"
+                 - TestSetupWin: ${{needs.SetupWin.outputs.TestSetupWin}}
+                 - TestSetupUn: ${{needs.SetupUbntu.outputs.TestSetupUn}}
+            "@
+            echo $markdown >> $Env:GITHUB_STEP_SUMMARY
