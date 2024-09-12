@@ -13,7 +13,7 @@ jobs:
 
    # Setup & Configuration
   SetupWin:
-    name: "Windows test of  >> $env:GITHUB_OUTPUT"
+    name: "Windows Test"
     runs-on: windows-latest
     outputs:
       TestSetupWin: ${{ steps.nkdagility.outputs.TestSetupWin }}      
@@ -26,7 +26,7 @@ jobs:
 
    # Setup & Configuration
   SetupUbntu:
-    name: "Windows test of  >> $env:GITHUB_OUTPUT"
+    name: "Ubuntu Test"
     runs-on: ubuntu-latest
     outputs:
       TestSetupUn: ${{ steps.nkdagility.outputs.TestSetupUn }}      
@@ -40,7 +40,7 @@ jobs:
 
   # Setup Validator
   SetupSummeryStage:
-    name: "Output Data"
+    name: "Results"
     runs-on: ubuntu-latest
     needs: [SetupWin, SetupUbntu]
     steps:
