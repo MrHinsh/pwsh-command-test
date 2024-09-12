@@ -25,7 +25,7 @@ jobs:
             echo "TestSetupWin=sucess" >> $env:GITHUB_OUTPUT
 
    # Setup & Configuration
-   SetupUbntu:
+  SetupUbntu:
     name: "Setup & Configuration "
     runs-on: ubuntu-latest
     outputs:
@@ -42,7 +42,7 @@ jobs:
   SetupSummeryStage:
     name: "Output Data"
     runs-on: ubuntu-latest
-    needs: SetupWin, SetupUbntu
+    needs: [SetupWin, SetupUbntu]
     steps:
     - name: "Show Summery"
       if: always()
